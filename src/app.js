@@ -11,9 +11,6 @@ if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices && '
   navigator.mediaDevices
     .getUserMedia({ audio: false, video: { width: 640, height: 480 } })
     .then(function(stream) {
-      // We've got the users webcam so now we can set up
-      // streaming that to the video element
-
       // Get the video element from the DOM
       const videoEl = document.querySelector('video');
       // Get the canvas from the DOM
@@ -24,15 +21,6 @@ if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices && '
       const videoStream = stream.getTracks()[0];
       // Create a FaceDetector instance
       const faceDetector = new window.FaceDetector();
-
-      // Set the video element source to a URL that references the stream from the webcam
-      videoEl.src = window.URL.createObjectURL(stream);
-      // Start playing the video element
-      videoEl.play();
-      // Here we're waiting a second for the video element to buffer and start playing
-      // If we don't do this the faceDetector api could get a video element without
-      // a video source and fail
-      setTimeout(() => drawFaces(), 1000); // TODO: how can I do this better?
 
       function drawFaces() {
         // Pass the video element into faceDetector.detect()
@@ -80,10 +68,15 @@ if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices && '
             window.requestAnimationFrame(drawFaces);
           })
           .catch(err => {
+            console.log(err);
             console.error('Boo, Face Detection failed: ' + err);
             doesntWork();
           });
       }
+      
+      videoEl.addEventListener('canplay', drawFaces);
+      videoEl.src = window.URL.createObjectURL(stream);
+      videoEl.play();
     })
     .catch(function(err) {
       console.error('Failed to get webcam', err);
