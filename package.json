@@ -1,0 +1,26 @@
+{
+  "name": "augmented-rockality",
+  "version": "1.0.0",
+  "description": "Helping you pass the Rock test, with the help the new Silicon Valley hotness: AUgmEnTEd rEALitY",
+  "scripts": {
+    "start": "webpack-dev-server"
+  },
+  "dependencies": {
+    "webpack-dev-server": "^2.4.5",
+    "webpack": "^2.6.1",
+    "html-webpack-plugin": "^2.28.0"
+  },
+  "engines": {
+    "node": "6.10.x"
+  },
+  "repository": {
+    "url": "https://github.com/colingourlay/augmented-rockality"
+  },
+  "license": "MIT",
+  "keywords": [
+    "glitch",
+    "face",
+    "detector",
+    "rock"
+  ]
+}
